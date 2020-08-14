@@ -4,7 +4,15 @@
   "description": "Re-space service",
   "main": "index.js",
   "scripts": {
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint --ignore-path .eslintignore --ext .ts,.js .",
+    "lint:fix": "eslint --ignore-path .eslintignore --ext .ts,.js --fix .",
+    "migration:create": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:create",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:generate",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:run",
+    "migration:revert": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:revert",
     "start": "tsc && node dist/app.js",
+    "start:dev": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
