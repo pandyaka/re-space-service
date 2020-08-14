@@ -1,0 +1,313 @@
+openapi: "3.0.0"
+info:
+  description: "API docs for Re:Store, a project for Garuda Hacks"
+  version: "1.0.0"
+  title: "Re:Store API"
+  contact:
+    email: "re-space@gmail.com"
+  license:
+    name: "Unlicensed"
+tags:
+- name: "user"
+- name: "space"
+- name: "rent"
+paths:
+  /authenticate:
+    post:
+      tags:
+      - "user"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthQuery"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Token"
+  /register:
+    post:
+      tags:
+      - "user"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthQuery"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Token"
+  /spaces:
+    get:
+      tags: 
+      - "space"
+      responses:
+        200:
+          description: "Returns top spaces in current location"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Spaces"
+  /malls:
+    get:
+      tags: 
+      - "space"
+      responses:
+        200:
+          description: "Returns top malls in current location"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Malls"
+  /malls/{mall_id}/spaces:
+    get:
+      tags: 
+      - "space"
+      parameters:
+        - name: mall_id
+          in: path
+          description: "Mall ID"
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: "Returns all spaces in mall with id = mall_id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Spaces"
+  /rents:
+    get:
+      tags:
+      - "rent"
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          description: "Returns all rents owned by a user"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rents"
+        403:
+          description: "Unauthorized"
+    post:
+      tags:
+      - "rent"
+      security:
+        - JWTAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRentQuery"
+      responses:
+        200:
+          description: "Returns newly created rent"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rent"
+        403:
+          description: "Unauthorized"
+  /rents/watch:
+    get:
+      tags:
+      - "rent"
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          description: "Returns all rents watchlisted by a user"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Watchlists"
+        403:
+          description: "Unauthorized"
+    post:
+      tags:
+      - "rent"
+      security:
+        - JWTAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWatchlistsQuery"
+      responses:
+        200:
+          description: "Returns newly created rent"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rent"
+        403:
+          description: "Unauthorized"
+components:
+  schemas:
+    Space:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Kota Kasablanka Lt 1 L2"
+        mall:
+          $ref: "#/components/schemas/Mall"
+        size:
+          description: "in m^2"
+          type: number
+          example: 10
+        shape:
+          type: string
+          enum: ["square", "circle"]
+        price:
+          description: "in IDR/mo"
+          type: number
+          example: 10000000
+        allowed_tenant_type:
+          type: array
+          items:
+            type: string
+            enum: ["food & beverage", "fashion", "kids & entertainment", "small retail", "beauty", "gadget & electronic", "health", "fitness", "home & living"]
+        image_url:
+          type: array
+          items:
+            type: string
+            example: ["/img/1.png", "/img/2.png"]
+    Spaces:
+      type: array
+      items: 
+        $ref: "#/components/schemas/Space"
+    Mall:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Kota Kasablanka"
+        class:
+          type: string
+          enum: ["elite", "medium", "slum"]
+        location:
+          type: string
+          example: "Jakarta Barat"
+        highlights:
+          type: array
+          items:
+            type: string
+            example: ["Near airport"]
+        image_url:
+          type: array
+          items:
+            type: string
+            example: ["/img/1.png", "/img/2.png"]
+        map_url:
+          type: array
+          items:
+            type: string
+            example: ["/maps/1.svg", "/maps/2.svg"]
+    Malls:
+      type: array
+      items: 
+        $ref: "#/components/schemas/Mall"
+    Rent:
+      properties:
+        id:
+          type: string
+          format: uuid
+        space:
+          $ref: "#/components/schemas/Space"
+        user_id:
+          type: string
+          format: uuid
+        price:
+          description: "in IDR/mo"
+          type: number
+          example: 10000000
+        interval:
+          description: "in months"
+          type: number
+          example: 1
+        next_payment:
+          type: string
+          format: date-time
+    Watchlist:
+      properties:
+        id:
+          type: string
+          format: uuid
+        space_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        reference_price:
+          description: "in IDR/mo"
+          type: number
+          example: 10000000
+        current_price:
+          description: "in IDR/mo"
+          type: number
+          example: 15000000
+        changes:
+          description: "in %"
+          type: number
+          example: 50
+    Rents:
+      type: array
+      items:
+        $ref: "#/components/schemas/Rent"
+    Watchlists:
+      type: array
+      items:
+        $ref: "#/components/schemas/Watchlist"
+    CreateRentQuery:
+      properties:
+        space_id:
+          type: string
+          format: uuid
+        interval:
+          description: "in months"
+          type: number
+          example: 1
+    CreateWatchlistsQuery:
+      properties:
+        space_id:
+          type: string
+          format: uuid
+    Token:
+      properties:
+        token:
+          type: string
+          format: JWT
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    AuthQuery:
+      properties:
+        username:
+          type: string
+          example: "user123"
+        password:
+          type: string
+          example: "password"
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer   
+      bearerFormat: JWT
+      
+      
+      
