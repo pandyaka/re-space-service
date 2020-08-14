@@ -1,15 +1,17 @@
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
 import { User } from './user';
+import { Space } from './space';
 
 @Entity()
 export class Watchlist extends BaseEntity {
     @OneToOne((type) => User)
     @JoinColumn()
-    user_id: User;
+    user: User;
 
-    @Column('uuid')
-    space_id: string;
+    @OneToOne((type) => Space)
+    @JoinColumn()
+    space: Space;
 
     @Column('int', { nullable: true })
     reference_price?: number;

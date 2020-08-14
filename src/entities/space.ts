@@ -26,7 +26,7 @@ export class Space extends BaseEntity {
     name: string;
 
     @Column('int', { default: 0 })
-    size: string;
+    size: number;
 
     @Column('enum', { default: 'SQUARE', enum: ShapeType })
     shape: ShapeType;

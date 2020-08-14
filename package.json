@@ -11,6 +11,7 @@
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.json migration:generate",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.json migration:run",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.json migration:revert",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.json",
     "start": "tsc && node dist/app.js",
     "start:dev": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,6 +1,7 @@
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
 import { Space } from './space';
+import { User } from './user';
 
 @Entity()
 export class Rent extends BaseEntity {
@@ -8,8 +9,9 @@ export class Rent extends BaseEntity {
     @JoinColumn()
     space: Space;
 
-    @Column('uuid')
-    user_id: string;
+    @OneToOne((type) => User)
+    @JoinColumn()
+    user: User;
 
     @Column('int')
     price: number;
