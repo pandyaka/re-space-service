@@ -284,15 +284,36 @@ components:
         space_id:
           type: string
           format: uuid
+        user_id:
+          type: string
+          format: uuid
         interval:
           description: "in months"
           type: number
           example: 1
+        price:
+          type: number
+          example: 10000
+        next_payment:
+          type: string
+          example: '2020-01-01 00:00:00.000Z'
     CreateWatchlistsQuery:
       properties:
         space_id:
           type: string
           format: uuid
+        user_id:
+          type: string
+          format: uuid
+        reference_price:
+          type: number
+          example: 10000
+        current_price:
+          type: number
+          example: 5000
+        changes:
+          type: number
+          example: 1000
     Token:
       properties:
         token:
