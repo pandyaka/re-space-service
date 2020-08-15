@@ -9,7 +9,6 @@ describe('MallRepository', () => {
 
     beforeAll(async () => {
         connection = await createTestConnection();
-        // Drops DB and re-creates schema
         await connection.dropDatabase();
         await connection.runMigrations();
         mallRepository = connection.getCustomRepository(MallRepository);
@@ -37,4 +36,4 @@ describe('MallRepository', () => {
             expect(mallInDB.image_url).toEqual(mall.image_url);
         });
     });
-})
+});

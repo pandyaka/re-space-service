@@ -11,6 +11,11 @@ export type FindRentQuery = {
 
 @EntityRepository(Rent)
 export class RentRepository extends Repository<Rent> {
+    public async insertRent(rentToInsert: Rent): Promise<Rent> {
+        const rent = await this.save(rentToInsert);
+        return rent;
+    }
+
     public async findByQuery(rentQuery: FindRentQuery): Promise<Rent[]> {
         const qb = this.createQueryBuilder('rent');
 

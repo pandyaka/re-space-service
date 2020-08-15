@@ -12,6 +12,11 @@ export type FindSpaceQuery = {
 
 @EntityRepository(Space)
 export class SpaceRepository extends Repository<Space> {
+    public async insertSpace(spaceToInsert: Space): Promise<Space> {
+        const space = await this.save(spaceToInsert);
+        return space;
+    }
+
     public async findByQuery(spaceQuery: FindSpaceQuery): Promise<Space[]> {
         const qb = this.createQueryBuilder('space');
 
