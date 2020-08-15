@@ -11,9 +11,9 @@ export = {
     database: PGDATABASE || 'test',
     synchronize: false,
     logging: false,
-    entities: ['src/entities/**/*.ts'],
-    migrations: ['src/migrations/**/*.ts'],
-    subscribers: ['src/subscriber/**/*.ts'],
+    entities: ['./src/entities/*'],
+    migrations: ['./src/migrations/*'],
+    subscribers: [],
     cli: {
         entitiesDir: 'src/entities',
         migrationsDir: 'src/migrations',
