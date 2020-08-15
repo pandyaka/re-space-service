@@ -1,8 +1,8 @@
 import { UserRepository } from 'repositories/user';
+import { sign as signJwt } from 'jsonwebtoken';
 import { User } from '../entities/user';
-import { sign as signJwt} from 'jsonwebtoken' ;
-export class UserService {
 
+export class UserService {
     /**
      * @description Create an instance of UserService
      */
@@ -24,14 +24,14 @@ export class UserService {
      * @description Attempt to authenticate user and return JWT
      * @param authenticateUser {object} Object containing user credentials
      */
-    async authenticateUser(userCredentials: Partial<User> ) : Promise<User[]> {
+    async authenticateUser(userCredentials: Partial<User>): Promise<User[]> {
         // Check user credentials with database
-        let user = await this.userRepository.findByQuery(userCredentials);
+        const user = await this.userRepository.findByQuery(userCredentials);
         return user;
     }
 
-    generateAccessToken(credentials: String) : string {
+    generateAccessToken(credentials: string): string {
         // expires in 24 hours
         return signJwt(credentials, process.env.TOKEN_SECRET, { expiresIn: '24h' });
-     }
+    }
 }
