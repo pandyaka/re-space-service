@@ -11,6 +11,11 @@ export type FindMallQuery = {
 
 @EntityRepository(Mall)
 export class MallRepository extends Repository<Mall> {
+    public async insertMall(mallToInsert: Mall): Promise<Mall> {
+        const mall = await this.save(mallToInsert);
+        return mall;
+    }
+
     public async findByQuery(mallQuery: FindMallQuery): Promise<Mall[]> {
         const qb = this.createQueryBuilder('mall');
 
