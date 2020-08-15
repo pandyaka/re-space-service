@@ -13,6 +13,7 @@ import { SpaceService } from './services/space';
 import { UserService } from './services/user';
 import { WatchlistService } from './services/watchlist';
 import { MallController } from './controllers/mall';
+import { UserController } from './controllers/user';
 
 function setRoute(app: Application) {
     const mallRepository = getCustomRepository(MallRepository);
@@ -28,8 +29,10 @@ function setRoute(app: Application) {
     const watchlistService = new WatchlistService(watchlistRepository);
 
     const mallController = new MallController(mallService);
+    const userController = new UserController(userService);
 
     app.use('/mall', mallController.getRouter());
+    app.use('/user', userController.getRouter());
 }
 
 export async function createApp(): Promise<express.Application> {

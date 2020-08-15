@@ -1,33 +1,52 @@
-import { UserRepository } from 'repositories/user';
+import { UserRepository, FindUserQuery } from 'repositories/user';
 import { sign as signJwt } from 'jsonwebtoken';
 import { User } from '../entities/user';
 
 export class UserService {
-    /**
-     * @description Create an instance of UserService
-     */
     constructor(private userRepository: UserRepository) {
         // Create instance of Data Access layer using our desired model
     }
 
-    /**
-     * @description Attempt to create a user with the provided object
-     * @param userToCreate {object} Object containing user credentials
-     */
     async registerUser(userToCreate: Partial<User>): Promise<User> {
-        let user = this.userRepository.create(userToCreate);
-        user = await this.userRepository.insertUser(user);
-        return user;
+        const username = userToCreate.name;
+        const takenUsername = await this.isUsernameTaken(username);
+
+        if (takenUsername) {
+            let user = await this.userRepository.create(userToCreate);
+            user = await this.userRepository.insertUser(user);
+            return user;
+        } else {
+            return null;
+        }
     }
 
-    /**
-     * @description Attempt to authenticate user and return JWT
-     * @param authenticateUser {object} Object containing user credentials
-     */
+    async isUsernameTaken(username: string): Promise<Boolean> {
+        let isUserExist = await this.userRepository.findByQuery({
+            name: username
+        });
+        if (isUserExist) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     async authenticateUser(userCredentials: Partial<User>): Promise<User[]> {
         // Check user credentials with database
         const user = await this.userRepository.findByQuery(userCredentials);
         return user;
+    }
+
+    async createUser(userToInsert: Partial<User>) {
+        let user: User = this.userRepository.create(userToInsert);
+        user = await this.userRepository.insertUser(user);
+
+        return user;
+    }
+
+    async getUser(userQuery: FindUserQuery): Promise<User[]> {
+        const users = await this.userRepository.findByQuery(userQuery);
+        return users;
     }
 
     generateAccessToken(credentials: string): string {
