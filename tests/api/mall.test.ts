@@ -21,11 +21,11 @@ describe('Mall endpoint tests', () => {
         await getConnection().close();
     });
 
-    describe('POST /mall', () => {
+    describe('POST /malls', () => {
         describe('Positive test cases', () => {
             it('should be able to create a mall', async () => {
                 const mallToCreate: Mall = factories.mall.build();
-                const response = await request(server).post(`/mall`).send(mallToCreate);
+                const response = await request(server).post(`/malls`).send(mallToCreate);
                 expect(response.status).toEqual(200);
                 const createdMall = response.body;
                 expect(createdMall.id).toBeString();
@@ -33,18 +33,38 @@ describe('Mall endpoint tests', () => {
         });
     });
 
-    describe('GET /mall', () => {
+    describe('GET /malls', () => {
         beforeEach(async () => {
             const mallToCreate: Mall = factories.mall.build();
-            const response = await request(server).post(`/mall`).send(mallToCreate);
+            const response = await request(server).post(`/malls`).send(mallToCreate);
             expect(response.status).toEqual(200);
         });
 
         describe('Positive test cases', () => {
             it('should be able to get malls', async () => {
-                const response = await request(server).get(`/mall`);
+                const response = await request(server).get(`/malls`);
                 expect(response.status).toEqual(200);
                 const createdMall = response.body[0];
+                expect(createdMall.id).toBeString();
+            });
+        });
+    });
+
+    describe('GET /mall/:mallId', () => {
+        let mallId: string;
+
+        beforeEach(async () => {
+            const mallToCreate: Mall = factories.mall.build();
+            const response = await request(server).post(`/malls`).send(mallToCreate);
+            expect(response.status).toEqual(200);
+            mallId = response.body.id;
+        });
+
+        describe('Positive test cases', () => {
+            it('should be able to get malls', async () => {
+                const response = await request(server).get(`/malls/${mallId}`);
+                expect(response.status).toEqual(200);
+                const createdMall = response.body;
                 expect(createdMall.id).toBeString();
             });
         });
