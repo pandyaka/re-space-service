@@ -7,6 +7,11 @@ export type FindUserQuery = {
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
+    public async insertUser(userToInsert: User): Promise<User> {
+        const user = await this.save(userToInsert);
+        return user;
+    }
+
     public async findByQuery(userQuery: FindUserQuery): Promise<User[]> {
         const qb = this.createQueryBuilder('user');
 
