@@ -46,5 +46,5 @@ export class Space extends BaseEntity {
     mall: Mall;
 
     @OneToOne((type) => Rent, (rent) => rent.space)
-    rent?: Rent;
+    rent: Rent;
 }

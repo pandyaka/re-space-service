@@ -39,4 +39,10 @@ export class SpaceService {
 
         return space;
     }
+
+    async getRentedSpace(): Promise<Space[]> {
+        const spaces = await this.spaceRepository.findRentedSpace();
+
+        return spaces;
+    }
 }
