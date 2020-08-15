@@ -19,7 +19,6 @@ import { config } from 'dotenv';
 import { RentController } from './controllers/rent';
 
 function setRoute(app: Application) {
-    config();
     const mallRepository = getCustomRepository(MallRepository);
     const rentRepository = getCustomRepository(RentRepository);
     const spaceRepository = getCustomRepository(SpaceRepository);
@@ -44,6 +43,7 @@ function setRoute(app: Application) {
 }
 
 export async function createApp(): Promise<express.Application> {
+    config();
     const app = express();
     app.set('port', process.env.PORT || 3000);
 

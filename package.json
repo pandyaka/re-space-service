@@ -11,7 +11,7 @@
         "migration:generate": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:generate",
         "migration:run": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:run",
         "migration:revert": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:revert",
-        "start": "tsc && node dist/app.js",
+        "start": "TS_NODE_FILES=true node -r ts-node/register src/index.ts",
         "start:dev": "ts-node src/index.ts",
         "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
         "test:dockest": "cross-env NODE_ENV=test ts-node ./dockest.ts"
@@ -103,10 +103,10 @@
         "uuid": "^8.3.0"
     },
     "dependencies": {
-        "@types/bcrypt": "^3.0.0",
+        "@types/bcryptjs": "^2.4.2",
         "@types/dotenv": "^8.2.0",
         "@types/jsonwebtoken": "^8.5.0",
-        "bcrypt": "^5.0.0",
+        "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
