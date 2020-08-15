@@ -10,6 +10,7 @@ export class MallController {
         this.router = Router();
         this.router.post('/', this.createMall.bind(this));
         this.router.get('/', this.getMalls.bind(this));
+        this.router.get('/:mallId', this.getMallById.bind(this));
     }
 
     public getRouter() {
@@ -47,6 +48,18 @@ export class MallController {
             const malls = await this.mallService.getMall(mallQuery);
 
             return res.status(200).json(malls);
+        } catch (error) {
+            return res.send(error);
+        }
+    }
+
+    public async getMallById(req: Request, res: Response) {
+        const { mallId } = req.params;
+
+        try {
+            const mall = await this.mallService.getMallById(mallId);
+
+            return res.status(200).json(mall);
         } catch (error) {
             return res.send(error);
         }
