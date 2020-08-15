@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { MallRepository, FindMallQuery } from 'repositories/mall';
+import { FindMallQuery } from 'repositories/mall';
 import { MallService } from 'services/mall';
 import { Mall, MallClass } from 'entities/mall';
 

@@ -1,6 +1,4 @@
 import { Request, Response, Router } from 'express';
-import { User } from 'entities/user';
-import { genSaltSync, hashSync } from 'bcrypt';
 import { UserService } from '../../services/user';
 
 export class UserController {
@@ -10,26 +8,26 @@ export class UserController {
         this.router = Router();
         this.router.post('/authenticate', this.authenticateUser.bind(this));
         this.router.post('/register', this.registerUser.bind(this));
-        this.router.post('/', this.createUser.bind(this));
+        this.router.get('/', this.getUser.bind(this));
     }
 
     public getRouter() {
         return this.router;
     }
 
-    public async createUser(req: Request, res: Response) {
+    public async getUser(req: Request, res: Response) {
         try {
-            const saltRounds = 10;
-            const salt = genSaltSync(saltRounds);
-            const hashedPassword = hashSync(req.body.password, salt);
-            const userToCreate: Partial<User> = {
-                name: req.body.name,
-                password: hashedPassword,
-                email: req.body.email,
-                phone_number: req.body.phone_number
-            };
+            const users = await this.userService.getUser({});
+            return res.status(200).json(users);
+        } catch (error) {
+            return res.send(error);
+        }
+    }
 
-            const user = await this.userService.createUser(userToCreate);
+    public async registerUser(req: Request, res: Response) {
+        try {
+            const userToCreate = req.body;
+            const user = await this.userService.registerUser(userToCreate);
             return res.status(200).json(user);
         } catch (error) {
             return res.send(error);
@@ -40,8 +38,8 @@ export class UserController {
         try {
             const userCredentials = req.body;
             const users = await this.userService.authenticateUser(userCredentials);
-            if (users.length === 1) {
-                const signedJwt = this.userService.generateAccessToken(users[0].id);
+            if (users) {
+                const signedJwt = await this.userService.generateAccessToken(users[0].id.toString());
                 const response = {
                     token: signedJwt
                 };
@@ -50,16 +48,6 @@ export class UserController {
             return res.status(400).send('Bad request');
         } catch (error) {
             return res.status(500).send(error);
-        }
-    }
-
-    public async registerUser(req: Request, res: Response): Promise<Response> {
-        try {
-            const userCredentials = req.body;
-            const registeredUser = await this.userService.registerUser(userCredentials);
-            return res.send(registeredUser);
-        } catch (err) {
-            return res.status(500).send(err);
         }
     }
 }
