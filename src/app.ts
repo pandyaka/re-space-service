@@ -14,6 +14,7 @@ import { UserService } from './services/user';
 import { WatchlistService } from './services/watchlist';
 import { MallController } from './controllers/mall';
 import { RentController } from './controllers/rent';
+import { UserController } from './controllers/user';
 
 function setRoute(app: Application) {
     const mallRepository = getCustomRepository(MallRepository);
@@ -29,9 +30,11 @@ function setRoute(app: Application) {
     const watchlistService = new WatchlistService(watchlistRepository);
 
     const mallController = new MallController(mallService);
+    const userController = new UserController(userService);
     const rentController = new RentController(rentService, watchlistService, userService, spaceService);
 
     app.use('/mall', mallController.getRouter());
+    app.use('/user', userController.getRouter());
     app.use('/rents', rentController.getRouter());
 }
 
