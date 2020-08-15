@@ -1,10 +1,10 @@
-import {Express} from 'express';
-import express from 'express';
-import 'dotenv'
+import express, { Express } from 'express';
 
-const app : Express = express();
+import 'dotenv';
+
+const app: Express = express();
 const port = 3000;
-require('dotenv').config()
+require('dotenv').config();
 
 app.get('/', (req, res) => {
     res.send('This service is running well!');
