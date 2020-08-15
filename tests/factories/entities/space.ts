@@ -12,6 +12,7 @@ export const space = Factory.define<Space>(() => {
         price: 1_000_000,
         allowed_tenant_type: SpaceAllowedTenantType.FASHION,
         image_url: ['/img/sp1.jpeg', '/img/sp2.jpeg'],
-        mall: mallToInclude
+        mall: mallToInclude,
+        rent: undefined
     };
 });
