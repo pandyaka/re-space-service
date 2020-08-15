@@ -3,12 +3,12 @@ import { BaseEntity } from './base-entity';
 // eslint-disable-next-line import/no-cycle
 import { Mall } from './mall';
 
-export enum ShapeType {
+export enum SpaceShapeType {
     SQUARE = 'SQUARE',
     CIRCLE = 'CIRCLE'
 }
 
-export enum AllowedTenantType {
+export enum SpaceAllowedTenantType {
     FOOD_AND_BEVERAGE = 'FOOD_AND_BEVERAGE',
     FASHION = 'FASHION',
     KIDS_AND_ENTERTAINMENT = 'KIDS_AND_ENTERTAINMENT',
@@ -28,14 +28,14 @@ export class Space extends BaseEntity {
     @Column('int', { default: 0 })
     size: number;
 
-    @Column('enum', { default: 'SQUARE', enum: ShapeType })
-    shape: ShapeType;
+    @Column('enum', { default: 'SQUARE', enum: SpaceShapeType })
+    shape: SpaceShapeType;
 
     @Column('int', { default: 0 })
     price: number;
 
-    @Column('enum', { enum: AllowedTenantType })
-    allowed_tenant_type: AllowedTenantType;
+    @Column('enum', { enum: SpaceAllowedTenantType })
+    allowed_tenant_type: SpaceAllowedTenantType;
 
     @Column('varchar', { nullable: true })
     image_url?: string[];
