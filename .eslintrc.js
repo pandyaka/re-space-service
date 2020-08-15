@@ -23,7 +23,9 @@ module.exports = {
         'import/no-unresolved': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/interface-name-prefix': 'off',
-        'class-methods-use-this': 'warn',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        'no-useless-catch': 'off',
+        'class-methods-use-this': 'off',
         'filenames/match-regex': [2, '^[0-9a-z-.]+$', true],
         'no-param-reassign': ['error', { props: false }]
     },

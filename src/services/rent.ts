@@ -1,7 +1,7 @@
 import { RentRepository, FindRentQuery } from 'repositories/rent';
 import { Rent } from 'entities/rent';
 
-export class SpaceService {
+export class RentService {
     constructor(private rentRepository: RentRepository) {}
 
     async createRent(rentToInsert: Partial<Rent>): Promise<Rent> {

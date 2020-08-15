@@ -12,7 +12,7 @@
         "migration:run": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:run",
         "migration:revert": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts migration:revert",
         "start": "tsc && node dist/app.js",
-        "start:dev": "ts-node src/app.ts",
+        "start:dev": "ts-node src/index.ts",
         "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
         "test:dockest": "cross-env NODE_ENV=test ts-node ./dockest.ts"
     },
@@ -102,6 +102,7 @@
     },
     "dependencies": {
         "@types/jsonwebtoken": "^8.5.0",
+        "body-parser": "^1.19.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "jsonwebtoken": "^8.5.1",

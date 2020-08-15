@@ -1,7 +1,7 @@
 import { WatchlistRepository, FindWatchlistQuery } from 'repositories/watchlist';
 import { Watchlist } from 'entities/watchlist';
 
-export class SpaceService {
+export class WatchlistService {
     constructor(private watchlistRepository: WatchlistRepository) {}
 
     async createWatchlist(watchlistToInsert: Partial<Watchlist>): Promise<Watchlist> {
