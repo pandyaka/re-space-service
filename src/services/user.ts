@@ -1,6 +1,6 @@
 import { UserRepository, FindUserQuery } from 'repositories/user';
 import { sign as signJwt } from 'jsonwebtoken';
-import { genSaltSync, hashSync, compareSync } from 'bcrypt';
+import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import { User } from '../entities/user';
 
 export class UserService {
