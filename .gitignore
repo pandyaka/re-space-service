@@ -75,7 +75,8 @@ typings/
 # Serverless directories
 .serverless
 
-# Xendit ignore files
 dist
 
 postgres-data/
+
+*.dockest-generated.yml

@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "lib": ["es6"],
-        "types": ["node", "express"],
+        "types": ["reflect-metadata", "node", "express"],
         "allowJs": true,
         "module": "commonjs",
         "moduleResolution": "node",
