@@ -5,4 +5,10 @@ import { BaseEntity } from './base-entity';
 export class User extends BaseEntity {
     @Column('varchar')
     name: string;
+
+    @Column('varchar')
+    email: string;
+
+    @Column('varchar')
+    phone_number: string;
 }
