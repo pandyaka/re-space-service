@@ -22,7 +22,7 @@ export class MallRepository extends Repository<Mall> {
         if (mallQuery.id) qb.andWhere('mall.id = :id', { id: mallQuery.id });
         if (mallQuery.name) qb.andWhere('mall.name = :name', { name: mallQuery.name });
         if (mallQuery.class) qb.andWhere('mall.class = :class', { class: mallQuery.class });
-        if (mallQuery.location) qb.andWhere('mall.location = :location', { location: mallQuery.location });
+        if (mallQuery.location) qb.andWhere('mall.location LIKE :location', { location: `%${mallQuery.location}%` });
         if (mallQuery.highlights)
             qb.andWhere('mall.highlights IN (:...highlights)', { highlights: mallQuery.highlights });
 

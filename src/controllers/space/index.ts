@@ -7,6 +7,7 @@ export class SpaceController {
     constructor(private spaceService: SpaceService) {
         this.router = Router();
         this.router.get('/', this.getSpaces.bind(this));
+        this.router.get('/rented', this.getRentedSpaces.bind(this));
         this.router.post('/', this.createSpace.bind(this));
     }
 
@@ -24,15 +25,6 @@ export class SpaceController {
         }
     }
 
-    // export type FindSpaceQuery = {
-    //     name?: string;
-    //     size?: number;
-    //     shape?: SpaceShapeType;
-    //     price?: number;
-    //     allowed_tenant_type?: SpaceAllowedTenantType;
-    //     mall_id?: string;
-    // };
-
     public async getSpaces(req: Request, res: Response) {
         try {
             if (req.query.mall_id) {
@@ -43,6 +35,16 @@ export class SpaceController {
                 return res.status(200).json(spaces);
             }
             const spaces = await this.spaceService.getSpace({});
+            return res.status(200).json(spaces);
+        } catch (error) {
+            return res.send(error);
+        }
+    }
+
+    public async getRentedSpaces(req: Request, res: Response) {
+        try {
+            const spaces = await this.spaceService.getRentedSpace();
+
             return res.status(200).json(spaces);
         } catch (error) {
             return res.send(error);

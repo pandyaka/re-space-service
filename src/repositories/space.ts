@@ -33,4 +33,12 @@ export class SpaceRepository extends Repository<Space> {
         const spaces = qb.getMany();
         return spaces;
     }
+
+    public async findRentedSpace(): Promise<Space[]> {
+        const qb = this.createQueryBuilder('space');
+
+        const spaces = qb.leftJoinAndSelect('space.rent', 'rent').getMany();
+
+        return spaces;
+    }
 }

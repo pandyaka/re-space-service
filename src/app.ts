@@ -16,6 +16,7 @@ import { MallController } from './controllers/mall';
 import { UserController } from './controllers/user';
 import { SpaceController } from './controllers/space';
 import { config } from 'dotenv';
+import { RentController } from './controllers/rent';
 
 function setRoute(app: Application) {
     const mallRepository = getCustomRepository(MallRepository);
@@ -33,10 +34,12 @@ function setRoute(app: Application) {
     const mallController = new MallController(mallService);
     const userController = new UserController(userService);
     const spaceController = new SpaceController(spaceService);
+    const rentController = new RentController(rentService, watchlistService, userService, spaceService);
 
     app.use('/malls', mallController.getRouter());
     app.use('/users', userController.getRouter());
     app.use('/spaces', spaceController.getRouter());
+    app.use('/rents', rentController.getRouter());
 }
 
 export async function createApp(): Promise<express.Application> {

@@ -15,4 +15,11 @@ export class MallService {
         const malls = await this.mallRepository.findByQuery(mallQuery);
         return malls;
     }
+
+    async getMallById(mallId: string): Promise<Mall> {
+        const mall = await this.mallRepository.findOne({
+            id: mallId
+        });
+        return mall;
+    }
 }
