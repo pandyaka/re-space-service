@@ -1,7 +1,9 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToOne } from 'typeorm';
 import { BaseEntity } from './base-entity';
 // eslint-disable-next-line import/no-cycle
 import { Mall } from './mall';
+// eslint-disable-next-line import/no-cycle
+import { Rent } from './rent';
 
 export enum SpaceShapeType {
     SQUARE = 'SQUARE',
@@ -42,4 +44,7 @@ export class Space extends BaseEntity {
 
     @ManyToOne((type) => Mall, (mall) => mall.spaces)
     mall: Mall;
+
+    @OneToOne((type) => Rent, (rent) => rent.space)
+    rent?: Rent;
 }

@@ -16,7 +16,7 @@ import { MallController } from './controllers/mall';
 import { UserController } from './controllers/user';
 import { SpaceController } from './controllers/space';
 import { config } from 'dotenv';
-import { RentController } from 'controllers/rent';
+import { RentController } from './controllers/rent';
 
 function setRoute(app: Application) {
     config();
