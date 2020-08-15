@@ -34,4 +34,12 @@ export class UserService {
         // expires in 24 hours
         return signJwt(credentials, process.env.TOKEN_SECRET, { expiresIn: '24h' });
     }
+
+    async getUserById(userId: string): Promise<User> {
+        const user = await this.userRepository.findOne({
+            id: userId
+        });
+
+        return user;
+    }
 }

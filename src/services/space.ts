@@ -15,4 +15,12 @@ export class SpaceService {
         const spaces = await this.spaceRepository.findByQuery(spaceQuery);
         return spaces;
     }
+
+    async getSpaceById(spaceId: string): Promise<Space> {
+        const space = await this.spaceRepository.findOne({
+            id: spaceId
+        });
+
+        return space;
+    }
 }

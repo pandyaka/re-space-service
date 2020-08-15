@@ -7,7 +7,7 @@ export type FindSpaceQuery = {
     shape?: SpaceShapeType;
     price?: number;
     allowed_tenant_type?: SpaceAllowedTenantType;
-    mallId?: string;
+    mall_id?: string;
 };
 
 @EntityRepository(Space)
@@ -28,7 +28,7 @@ export class SpaceRepository extends Repository<Space> {
             qb.andWhere('space.allowed_tenant_type = :allowed_tenant_type', {
                 allowed_tenant_type: spaceQuery.allowed_tenant_type
             });
-        if (spaceQuery.mallId) qb.andWhere('space.mallId = :mallId', { mallId: spaceQuery.mallId });
+        if (spaceQuery.mall_id) qb.andWhere('space.mallId = :mallId', { mallId: spaceQuery.mall_id });
 
         const spaces = qb.getMany();
         return spaces;

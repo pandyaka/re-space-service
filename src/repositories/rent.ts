@@ -2,8 +2,8 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Rent } from '../entities/rent';
 
 export type FindRentQuery = {
-    spaceId?: string;
-    userId?: string;
+    space_id?: string;
+    user_id?: string;
     price?: number;
     interval?: number;
     next_payment?: Date;
@@ -19,8 +19,8 @@ export class RentRepository extends Repository<Rent> {
     public async findByQuery(rentQuery: FindRentQuery): Promise<Rent[]> {
         const qb = this.createQueryBuilder('rent');
 
-        if (rentQuery.spaceId) qb.andWhere('rent.spaceId = :spaceId', { spaceId: rentQuery.spaceId });
-        if (rentQuery.userId) qb.andWhere('rent.userId = :userId', { userId: rentQuery.userId });
+        if (rentQuery.space_id) qb.andWhere('rent.spaceId = :spaceId', { spaceId: rentQuery.space_id });
+        if (rentQuery.user_id) qb.andWhere('rent.userId = :userId', { userId: rentQuery.user_id });
         if (rentQuery.price) qb.andWhere('rent.price = :price', { price: rentQuery.price });
         if (rentQuery.interval) qb.andWhere('rent.interval = :interval', { interval: rentQuery.interval });
         if (rentQuery.next_payment)
