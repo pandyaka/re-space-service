@@ -63,6 +63,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Spaces'
+  /spaces/rented:
+    get:
+      tags:
+        - 'space'
+      responses:
+        200:
+          description: 'Returns rented space'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rents'
 
   /malls:
     get:
