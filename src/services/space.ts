@@ -1,14 +1,30 @@
 import { SpaceRepository, FindSpaceQuery } from 'repositories/space';
 import { Space } from 'entities/space';
+import { Request } from 'express';
+import { MallService } from './mall';
 
 export class SpaceService {
-    constructor(private spaceRepository: SpaceRepository) {}
+    constructor(private spaceRepository: SpaceRepository, private mallService: MallService) {}
 
-    async createSpace(spaceToInsert: Partial<Space>): Promise<Space> {
-        let space: Space = this.spaceRepository.create(spaceToInsert);
-        space = await this.spaceRepository.insertSpace(space);
+    async createSpace(spaceToInsert: FindSpaceQuery): Promise<Space> {
+        const foundMall = await this.mallService.getMall({
+            id: spaceToInsert.mall_id
+        });
 
-        return space;
+        if (foundMall.length === 1) {
+            const spaceToCreate: Partial<Space> = {
+                name: spaceToInsert.name,
+                size: spaceToInsert.size,
+                shape: spaceToInsert.shape,
+                price: spaceToInsert.price,
+                allowed_tenant_type: spaceToInsert.allowed_tenant_type,
+                mall: foundMall[0]
+            };
+            let space: Space = this.spaceRepository.create(spaceToCreate);
+            space = await this.spaceRepository.insertSpace(space);
+            return space;
+        }
+        return null;
     }
 
     async getSpace(spaceQuery: FindSpaceQuery): Promise<Space[]> {
