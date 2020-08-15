@@ -11,6 +11,11 @@ export type FindWatchlistQuery = {
 
 @EntityRepository(Watchlist)
 export class WatchlistRepository extends Repository<Watchlist> {
+    public async insertWatchlist(watchlistToInsert: Watchlist): Promise<Watchlist> {
+        const watchlist = await this.save(watchlistToInsert);
+        return watchlist;
+    }
+
     public async findByQuery(watchlistQuery: FindWatchlistQuery): Promise<Watchlist[]> {
         const qb = this.createQueryBuilder('watchlist');
 
