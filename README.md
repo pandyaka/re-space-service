@@ -1,4 +1,5 @@
 # re-space-service
+![Logo](/public/images/logo.png)
 
 ## Running apps locally
 1. Start DB service in docker with
